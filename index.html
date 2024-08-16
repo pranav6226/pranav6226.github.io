@@ -27,23 +27,62 @@
             position: fixed;
             top: 0;
             left: 0;
+            height: 7%;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             z-index: 1000;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center; /* Center the navigation on desktop */
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center; /* Center the links on desktop */
+            align-items: center;
         }
 
         .floating-nav a {
             color: #fff;
-            font-weight: 500;
-            padding: 10px 15px;
+            font-weight: 550;
+            padding: 20px 30px;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .floating-nav a:hover {
             color: #1abc9c;
+        }
+
+        /* Mobile Menu */
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.9);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 999;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .menu-icon {
+                display: block;
+            }
         }
 
         /* Ensure each section fills the entire viewport height */
@@ -139,55 +178,85 @@
             border-color: transparent transparent #1f2937 transparent;
         }
 
-        /* Projects Grid Layout */
+       /* Projects Grid Layout */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 20px;
-            width: 100%;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 0; /* No gaps between the boxes */
+            width: 100vw; /* Full width of the viewport */
+            height: 100vh; /* Full height of the viewport */
             box-sizing: border-box;
         }
 
         .project-card {
-            flex: 0 0 380px;
-            background-color: rgba(31, 41, 55, 0.8); /* Transparent background */
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            overflow: hidden;
-            cursor: pointer;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for smooth animation */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Minimal border with slight transparency */
+            /*border-radius: 0.5rem;  Optional: Add some border-radius for smoother corners */
         }
 
         .project-card img {
             width: 100%;
-            height: 75%; /* Adjusted to 75% of the box */
-            object-fit: cover;
-            border-bottom: 1px solid #2d3748;
+            height: 100%;
+            object-fit: fill; /* Ensure the image covers the entire box */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Initially hide the text */
+        .project-card h3, .project-card p {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            opacity: 0; /* Hide the text */
+            transform: translateY(20px); /* Move the text slightly down */
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for text */
+        }
+
+        /* Reveal the text on hover */
+        .project-card:hover h3, .project-card:hover p {
+            opacity: 1; /* Show the text */
+            transform: translateY(0); /* Move the text back to its original position */
         }
 
         .project-card h3 {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin: 1rem 0 0.5rem;
-            color: #fff;
-            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for text */
+            padding: 10px;
         }
 
         .project-card p {
-            font-size: 0.875rem;
-            color: #d1d5db;
-            text-align: center;
-            margin-bottom: 1rem;
+            font-size: 1rem;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for text */
+            padding: 5px;
         }
 
+        /* Hover Animation */
         .project-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05); /* Slightly enlarge the project card on hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow on hover for a lifting effect */
+            z-index: 10;
         }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr; /* Single column layout on mobile */
+                grid-template-rows: repeat(8, 1fr); /* 8 rows for 8 projects */
+            }
+        }
+
+
 
         /* Career Timeline */
         .experience-education {
@@ -291,18 +360,60 @@
             color: #d1d5db;
             margin-bottom: 10px;
         }
+
+        /* Footer Styling */
+        .footer {
+            background-color: black;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #888;
+            font-size: 0.875rem;
+            margin: 0.5rem 0;
+        }
+
+        .footer .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .footer .social-icons a {
+            color: white;
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer .social-icons a:hover {
+            color: #1abc9c;
+        }
+
+        @media (max-width: 768px) {
+            .footer .social-icons a {
+                margin: 0 0.5rem;
+                font-size: 1.25rem;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-black text-gray-300 min-h-screen flex flex-col">
 
     <!-- Floating Navigation Bar -->
-    <nav class="floating-nav flex justify-center space-x-6 py-4">
-        <a href="#introduction" class="nav-link">Introduction</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#career-timeline" class="nav-link">Career Timeline</a>
-        <a href="#contact" class="nav-link">Contact</a>
+    <nav class="floating-nav">
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <div class="nav-links">
+            <a href="#introduction" class="nav-link" style="font-size: 1.25rem;">Introduction</a>
+            <a href="#projects" class="nav-link" style="font-size: 1.25rem;">Projects</a>
+            <a href="#career-timeline" class="nav-link" style="font-size: 1.25rem;">Career Timeline</a>
+            <a href="#contact" class="nav-link" style="font-size: 1.25rem;">Contact</a>
+        </div>
     </nav>
+
 
     <!-- Main Content -->
     <main class="flex-1">
@@ -310,25 +421,25 @@
         <section id="introduction" class="py-12 md:py-16 lg:py-20 bg-gray-900 flex items-center justify-center text-left">
             <div class="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="flex flex-col justify-center">
-                    <h2 class="text-5xl font-bold mb-6 text-white">Pranav Mahesh Mekal</h2>
-                    <p class="text-gray-400 section-content mb-8">
-                        Welcome to my Data Science Portfolio! I'm Pranav Mahesh Mekal, and I'm passionate about uncovering the stories hidden in data. From predicting market trends to building innovative tools that solve real-world problems, I love diving into data and finding insights that can make a difference. This space is where I share my projects, experiments, and ideas—it's a reflection of my curiosity and dedication to the ever-evolving field of data science. Take a look around, and let's connect if something here sparks your interest!
+                    <h2 class="text-5xl font-extrabold mb-8 text-white">Hi, I'm Pranav</h2>
+                    <p class="text-lg text-gray-300 mb-10 leading-relaxed">
+                        Welcome to my Data Science Portfolio! I'm passionate about uncovering the stories hidden in data. From predicting market trends to building innovative tools that solve real-world problems, I love diving into data and finding insights that can make a difference. This space is where I share my projects, experiments, and ideas—it's a reflection of my curiosity and dedication to the ever-evolving field of data science. Take a look around, and let's connect if something here sparks your interest!
                     </p>
                     <div class="intro-links flex">
                         <a href="https://www.linkedin.com/in/pranav-mekal/" target="_blank">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-10 h-10 text-white hover:text-gray-300 transition-colors">
                                 <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
                             </svg>
                             <span class="tooltip">LinkedIn</span>
                         </a>
                         <a href="https://github.com/pranav6226" target="_blank">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="w-10 h-10 text-white hover:text-gray-300 transition-colors">
                                 <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
                             </svg>
                             <span class="tooltip">GitHub</span>
                         </a>
                         <a href="https://public.tableau.com/app/profile/pranav.mekal" target="_blank">
-                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48" class="w-10 h-10 text-white hover:text-gray-300 transition-colors">
                                 <rect width="1.5" height="9" x="22.75" y="1" fill="#78909c"></rect>
                                 <rect width="9" height="1.5" x="19" y="4.75" fill="#78909c"></rect>
                                 <rect width="1.5" height="9" x="40.75" y="19" fill="#5c6bc0"></rect>
@@ -351,7 +462,7 @@
                             <span class="tooltip">Tableau Public</span>
                         </a>
                         <a href="Resume.pdf" target="_blank">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-10 h-10 text-white hover:text-gray-300 transition-colors">
                                 <path d="M369.9 97.98l-83.89-83.88C277.1 5.372 266.2 0 254.1 0H64c-35.35 0-64 28.65-64 64v384c0 35.35 28.65 64 64 64h256c35.35 0 64-28.65 64-64V121.9C384 109.8 378.6 98.02 369.9 97.98zM256 32.01L352 128H256V32.01zM320 480H64c-17.64 0-32-14.36-32-32V64c0-17.64 14.36-32 32-32h160v104c0 13.2 10.8 24 24 24h104v288C352 465.6 337.6 480 320 480zM256 272v128C256 408.8 248.8 416 240 416h-160C71.16 416 64 408.8 64 400V272c0-8.844 7.156-16 16-16h160C248.8 256 256 263.2 256 272zM240 288h-128v32h128V288zM240 352h-128v32h128V352zM192 224c-26.51 0-48-21.49-48-48S165.5 128 192 128s48 21.49 48 48S218.5 224 192 224z" />
                             </svg>
                             <span class="tooltip">View My Resume</span>
@@ -364,50 +475,53 @@
             </div>
         </section>
 
+
         <!-- Projects Section -->
         <section id="projects" class="projects-grid">
             <!-- Project placeholders -->
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 1 Image">
-                <h3>Project 1 Title</h3>
-                <p>Tools Used</p>
-            </div>
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 2 Image">
-                <h3>Project 2 Title</h3>
-                <p>Tools Used</p>
-            </div>
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 3 Image">
-                <h3>Project 3 Title</h3>
-                <p>Tools Used</p>
-            </div>
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 4 Image">
-                <h3>Project 4 Title</h3>
-                <p>Tools Used</p>
-            </div>
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 5 Image">
-                <h3>Project 5 Title</h3>
-                <p>Tools Used</p>
-            </div>
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 6 Image">
-                <h3>Project 6 Title</h3>
-                <p>Tools Used</p>
-            </div>
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 7 Image">
-                <h3>Project 7 Title</h3>
-                <p>Tools Used</p>
-            </div>
-            <div class="project-card">
-                <img src="https://via.placeholder.com/600x400" alt="Project 8 Image">
-                <h3>Project 8 Title</h3>
-                <p>Tools Used</p>
-            </div>
+            <a href="https://github.com/pranav6226/2FA-using-gait-analysis-and-facial-recognition" target="_blank" class="project-card">
+                <img src="GEI.png" alt="Project 1 Image">
+                <h3>2FA using Gait Analysis and Facial Recognition</h3>
+                <p>Python, Deep Learning, Computer Vision</p>
+            </a>
+            <a href="https://github.com/pranav6226/Option_Price_Prediction" target="_blank" class="project-card">
+                <img src="stonks.jpg" alt="Project 2 Image">
+                <h3>Stock Option Closing Price Prediction</h3>
+                <p>Python, Machine Learning, Financial Analysis</p>
+            </a>
+            <a href="https://github.com/pranav6226/Farm2Fork" target="_blank" class="project-card">
+                <img src="f2f.jpg" alt="Project 3 Image">
+                <h3>Farm2Fork - Supply Chain Management App</h3>
+                <p>SQL, Python, Power BI, Power Apps</p>
+            </a>
+            <a href="https://github.com/pranav6226/Datacore-Sales-Chatbot" target="_blank" class="project-card">
+                <img src="chatbot.jpg" alt="Project 4 Image">
+                <h3>Sales Chatbot Using Rasa Framework</h3>
+                <p>Python, Natural Language Processing</p>
+            </a>
+            <a href="https://public.tableau.com/app/profile/pranav.mekal/viz/SalesCustomerDashboardsDynamic_17170465631020/SalesDashboard" target="_blank" class="project-card">
+                <img src="sales.png" alt="Project 5 Image">
+                <h3>Tableau Supermarket Sales & Customer Dashboard</h3>
+                <p>Tableau</p>
+            </a>
+            <a href="https://public.tableau.com/app/profile/pranav.mekal/viz/AnalysisofCovid19inIndia_17175939817840/Dashboard" target="_blank" class="project-card">
+                <img src="covid.png" alt="Project 6 Image">
+                <h3>Tableau Analyis of Covid-19 in India Dashboard</h3>
+                <p>Tableau</p>
+            </a>
+            <a href="https://public.tableau.com/app/profile/pranav.mekal/viz/BA_Reviews_17174136692680/Dashboard" target="_blank" class="project-card">
+                <img src="BA.png" alt="Project 7 Image">
+                <h3>Tableau British Airways Reviews Dashboard</h3>
+                <p>Tableau</p>
+            </a>
+            <a href="https://github.com/pranav6226" target="_blank" class="project-card">
+                <img src="under_construction.jpg" alt="Project 7 Image">
+                <h3>Stock Trading Bot Using Sentinment Analysis</h3>
+                <p>Python, Deep Learning, Financial Analysis</p>
+            </a>
+            <!-- Add more project cards as needed -->
         </section>
+
 
         <!-- Career Timeline Section -->
         <section id="career-timeline" class="experience-education">
@@ -487,82 +601,59 @@
 
     <!-- Footer -->
     <footer class="bg-black py-6">
-        <div class="container mx-auto px-4 md:px-6 flex flex-col items-center justify-between">
-            <p class="text-lg text-gray-500 mb-4">© 2024 Pranav Mahesh Mekal</p>
-            <div class="flex space-x-6">
-                <div class="relative group">
-                    <a href="https://www.linkedin.com/in/pranav-mekal/" target="_blank" class="text-white hover:text-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-7 h-7 fill-current">
-                            <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
-                        </svg>
-                        <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">LinkedIn</span>
-                    </a>
-                </div>
-                <div class="relative group">
-                    <a href="https://github.com/pranav6226" target="_blank" class="text-white hover:text-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="w-7 h-7 fill-current">
-                            <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
-                        </svg>
-                    </a>
-                    <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">GitHub</span>
-                </div>
-                <div class="relative group">
-                    <a href="https://public.tableau.com/app/profile/pranav.mekal" target="_blank" class="text-white hover:text-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48" class="w-7 h-7 fill-current">
-                            <rect width="1.5" height="9" x="22.75" y="1" fill="#78909c"></rect>
-                            <rect width="9" height="1.5" x="19" y="4.75" fill="#78909c"></rect>
-                            <rect width="1.5" height="9" x="40.75" y="19" fill="#5c6bc0"></rect>
-                            <rect width="9" height="1.5" x="37" y="22.75" fill="#5c6bc0"></rect>
-                            <rect width="1.5" height="9" x="4.75" y="19" fill="#78909c"></rect>
-                            <rect width="9" height="1.5" x="1" y="22.75" fill="#78909c"></rect>
-                            <rect width="1.5" height="9" x="22.75" y="37" fill="#5c6bc0"></rect>
-                            <rect width="9" height="1.5" x="19" y="40.75" fill="#5c6bc0"></rect>
-                            <rect width="17" height="3" x="15" y="22" fill="#e8762d"></rect>
-                            <rect width="3" height="17" x="22" y="15" fill="#e8762d"></rect>
-                            <rect width="2" height="14" x="11" y="6" fill="#ffa000"></rect>
-                            <rect width="14" height="2" x="5" y="12" fill="#ffa000"></rect>
-                            <rect width="2" height="14" x="34" y="6" fill="#607d8b"></rect>
-                            <rect width="14" height="2" x="28" y="12" fill="#607d8b"></rect>
-                            <rect width="2" height="14" x="11" y="27" fill="#c62828"></rect>
-                            <rect width="14" height="2" x="5" y="33" fill="#c62828"></rect>
-                            <rect width="2" height="14" x="34" y="27" fill="#0d47a1"></rect>
-                            <rect width="14" height="2" x="28" y="33" fill="#0d47a1"></rect>
-                        </svg>
-                    </a>
-                    <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">Tableau Public</span>
-                </div>
-                <div class="relative group">
-                    <a href="path_to_your_resume.pdf" target="_blank" class="text-white hover:text-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-7 h-7 fill-current">
-                            <path d="M369.9 97.98l-83.89-83.88C277.1 5.372 266.2 0 254.1 0H64c-35.35 0-64 28.65-64 64v384c0 35.35 28.65 64 64 64h256c35.35 0 64-28.65 64-64V121.9C384 109.8 378.6 98.02 369.9 97.98zM256 32.01L352 128H256V32.01zM320 480H64c-17.64 0-32-14.36-32-32V64c0-17.64 14.36-32 32-32h160v104c0 13.2 10.8 24 24 24h104v288C352 465.6 337.6 480 320 480zM256 272v128C256 408.8 248.8 416 240 416h-160C71.16 416 64 408.8 64 400V272c0-8.844 7.156-16 16-16h160C248.8 256 256 263.2 256 272zM240 288h-128v32h128V288zM240 352h-128v32h128V352zM192 224c-26.51 0-48-21.49-48-48S165.5 128 192 128s48 21.49 48 48S218.5 224 192 224z" />
-                        </svg>
-                    </a>
-                    <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">View My Resume</span>
-                </div>
+        <div class="container mx-auto px-4 md:px-6 flex flex-col items-center">
+            <div class="flex space-x-6 mb-4">
+                <a href="https://www.linkedin.com/in/pranav-mekal/" target="_blank" class="text-white hover:text-gray-300 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-7 h-7 fill-current">
+                        <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
+                    </svg>
+                    <span class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">LinkedIn</span>
+                </a>
+                <a href="https://github.com/pranav6226" target="_blank" class="text-white hover:text-gray-300 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="w-7 h-7 fill-current">
+                        <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
+                    </svg>
+                    <span class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">GitHub</span>
+                </a>
+                <a href="https://public.tableau.com/app/profile/pranav.mekal" target="_blank" class="text-white hover:text-gray-300 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48" class="w-7 h-7 fill-current">
+                        <rect width="1.5" height="9" x="22.75" y="1" fill="#78909c"></rect>
+                        <rect width="9" height="1.5" x="19" y="4.75" fill="#78909c"></rect>
+                        <rect width="1.5" height="9" x="40.75" y="19" fill="#5c6bc0"></rect>
+                        <rect width="9" height="1.5" x="37" y="22.75" fill="#5c6bc0"></rect>
+                        <rect width="1.5" height="9" x="4.75" y="19" fill="#78909c"></rect>
+                        <rect width="9" height="1.5" x="1" y="22.75" fill="#78909c"></rect>
+                        <rect width="1.5" height="9" x="22.75" y="37" fill="#5c6bc0"></rect>
+                        <rect width="9" height="1.5" x="19" y="40.75" fill="#5c6bc0"></rect>
+                        <rect width="17" height="3" x="15" y="22" fill="#e8762d"></rect>
+                        <rect width="3" height="17" x="22" y="15" fill="#e8762d"></rect>
+                        <rect width="2" height="14" x="11" y="6" fill="#ffa000"></rect>
+                        <rect width="14" height="2" x="5" y="12" fill="#ffa000"></rect>
+                        <rect width="2" height="14" x="34" y="6" fill="#607d8b"></rect>
+                        <rect width="14" height="2" x="28" y="12" fill="#607d8b"></rect>
+                        <rect width="2" height="14" x="11" y="27" fill="#c62828"></rect>
+                        <rect width="14" height="2" x="5" y="33" fill="#c62828"></rect>
+                        <rect width="2" height="14" x="34" y="27" fill="#0d47a1"></rect>
+                        <rect width="14" height="2" x="28" y="33" fill="#0d47a1"></rect>
+                    </svg>
+                    <span class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">Tableau Public</span>
+                </a>
+                <a href="Resume.pdf" target="_blank" class="text-white hover:text-gray-300 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-7 h-7 fill-current">
+                        <path d="M369.9 97.98l-83.89-83.88C277.1 5.372 266.2 0 254.1 0H64c-35.35 0-64 28.65-64 64v384c0 35.35 28.65 64 64 64h256c35.35 0 64-28.65 64-64V121.9C384 109.8 378.6 98.02 369.9 97.98zM256 32.01L352 128H256V32.01zM320 480H64c-17.64 0-32-14.36-32-32V64c0-17.64 14.36-32 32-32h160v104c0 13.2 10.8 24 24 24h104v288C352 465.6 337.6 480 320 480zM256 272v128C256 408.8 248.8 416 240 416h-160C71.16 416 64 408.8 64 400V272c0-8.844 7.156-16 16-16h160C248.8 256 256 263.2 256 272zM240 288h-128v32h128V288zM240 352h-128v32h128V352zM192 224c-26.51 0-48-21.49-48-48S165.5 128 192 128s48 21.49 48 48S218.5 224 192 224z" />
+                    </svg>
+                    <span class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">View My Resume</span>
+                </a>
             </div>
+            <p class="text-lg text-gray-500">© 2024 Pranav Mahesh Mekal</p>
         </div>
     </footer>
 
+
     <script>
-        let currentIndex = 0;
-
-        function scrollProjects(direction) {
-            const projectsWrapper = document.querySelector('.projects-wrapper');
-            const projectWidth = document.querySelector('.project-card').clientWidth + 32; // Include margin
-            const visibleProjects = 4;
-            const totalProjects = document.querySelectorAll('.project-card').length;
-
-            currentIndex += direction;
-
-            // Prevent scrolling past the last or first set of projects
-            if (currentIndex < 0) {
-                currentIndex = 0;
-            } else if (currentIndex > totalProjects - visibleProjects) {
-                currentIndex = totalProjects - visibleProjects;
-            }
-
-            const translateX = -currentIndex * projectWidth;
-            projectsWrapper.style.transform = `translateX(${translateX}px)`;
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('open');
         }
 
         const sections = document.querySelectorAll('section');
@@ -611,7 +702,6 @@
                 });
             });
         });
-
     </script>
 
 </body>
