@@ -42,7 +42,7 @@ A contact form that allows visitors to reach out to me via email.
 
 ## Live Demo
 
-You can view the live demo of my portfolio at [your portfolio link].
+You can view the live demo of my portfolio at mekal.dev.
 
 ## Contact
 
